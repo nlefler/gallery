@@ -274,7 +274,7 @@ document.liveUpdateImageMaxSize = function( id, value ) {
 var storedGalleryAuthorURL = "";
 
 document.liveUpdate = function( path, newValue, cssId, property ) {
-    // window.alert(path + ' ' + newValue + ' ' + cssId);
+    //window.alert(path + ' ' + newValue + ' ' + cssId);
     var result = "failed",
         $el;
 
@@ -290,7 +290,7 @@ document.liveUpdate = function( path, newValue, cssId, property ) {
             $el = $("#galleryAuthor");
             if(newValue != ""){
                 if(storedGalleryAuthorURL != ""){
-                    $el.html('<a id="galleryAuthorURL" href="' + storedGalleryAuthorURL + '" target="_blank">by ' + newValue + '</a>');
+                    $el.html('<a id="galleryAuthorURL" href="' + storedGalleryAuthorURL + '" target="_blank">' + "by " + newValue + '</a>');
                 }
                 else {
                     $el.html("by " + newValue);
@@ -321,12 +321,7 @@ document.liveUpdate = function( path, newValue, cssId, property ) {
 
             $("#galleryAuthor").html(newAuthorContent);
 
-            break;
-
-        case "nonCSS.galleryExtra.value":
-            $el = $("#galleryExtra");
-            $el.html(newValue);
-            break;        
+            break;     
 
         // Color Palette
 
@@ -396,7 +391,29 @@ document.liveUpdate = function( path, newValue, cssId, property ) {
                 }
             );
             result = "invalidateAllContent";
-            break;              
+            break;
+
+        case "appearance.thumbnail.border-width":
+            
+            $el = $(".thumb-img");
+            $el.each(
+                function(index){
+                    this.style.setProperty('border-width', newValue, 'important' );
+                }
+            );
+            result = "invalidateAllContent";
+            break;
+
+        case "appearance.thumbnail.box-shadow":
+        
+            $el = $(".thumb-img");
+            $el.each(
+                function(index){
+                    this.style.setProperty('box-shadow', newValue, 'important' );
+                }
+            );
+            result = "invalidateAllContent";
+            break;    
 
         // The user changed the thumbnail size
         case "metadata.thumbnailSize.value":
@@ -404,7 +421,8 @@ document.liveUpdate = function( path, newValue, cssId, property ) {
             $el = $("#thumbnailContainer div.thumbnails");
             $el.removeClass("thumbnail-size-sm thumbnail-size-md thumbnail-size-lg").addClass("thumbnail-size-" + newValue);
             window.location.reload(true);
-            break;
+            result = "invalidateAllContent";
+            break;   
 
         // The user changed the header visibility
         case "nonCSS.showHeader":
@@ -426,7 +444,6 @@ document.liveUpdate = function( path, newValue, cssId, property ) {
                 __class = "is-fixed";
             }
             $el.removeClass("is-fixed").addClass(__class);
-            $("#thumbnailContainer").css("padding-top", $("header").outerHeight() + "px");
             break;
 
         // The user changed the photo corners setting
