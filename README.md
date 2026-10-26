@@ -16,7 +16,9 @@ is a saved search; publishing writes every tab's photos, in the search's order:
 | `images/thumb/<image>.jpg` | its thumbnail, 400 px |
 
 Photodesk owns `data/` and `images/`: it adds what's new and deletes what no tab
-shows any more, so don't edit them by hand. Images carry no metadata at all.
+shows any more, so don't edit them by hand. Images carry nothing from the photo's own
+metadata (no date, camera or location), only who owns them (IPTC/XMP rights), and the
+large ones a watermark.
 After publishing, commit and push:
 
 ```sh
